@@ -4,7 +4,7 @@ SYNOPSIS
 *pypstats* is for retrieving monthly download statistics for packages 
 distributed via `PyPI <http://pypi.python.org/pypi>`_.  Statistics are 
 downloaded from http://pypi.python.org/stats/months/.  This page contains 
-monthly statistics in :file:`bz2` files starting from June 2010.  These
+monthly statistics in compressed files starting from June 2010.  These
 files contains information on releases that are removed from PyPI, so
 you will get more complete statistics for packages that were released 
 after June 2010. 
@@ -12,8 +12,8 @@ after June 2010.
 INSTALLATION
 ============
 
-Download :file:`pypstats-1.{x}.tar.gz`. Extract tarball contents and run 
-:file:`setup.py` as follows::
+Download **pypstats-1.{x}.tar.gz**. Extract tarball contents and run 
+**setup.py** as follows::
   
   $ tar -xzf pypstats-1.x.tar.gz
   $ cd pypstats-1.x
@@ -31,7 +31,7 @@ First use
 ---------
 
 Before statistics can be printed or plotted, you need to retrieve statistics 
-and save them locally using :program:`pypstats update` command::
+and save them locally using **pypstats update** command::
 
   $ pypstats update ProDy
   Fetching content from 'http://pypi.python.org/stats/months/'.
@@ -48,7 +48,7 @@ monthly stats files are downloaded.
 Monthly stats
 -------------
 
-Monthly statistics can be printed using :program:`pypstats release` command::
+Monthly statistics can be printed using **pypstats release** command::
 
   $ pypstats.py monthly ProDy_stats.pkl 
   Loading statistics from 'ProDy_stats.pkl'.
@@ -69,13 +69,12 @@ follows::
 Release stats
 -------------
 
-Release statistics can be printed using :program:`pypstats release` command::
+Release statistics can be printed using **pypstats release** command::
 
 Total downloads
 ---------------
 
-Total number of downloads can be printed using :program:`pypstats total` 
-command::
+Total number of downloads can be printed using **pypstats total** command::
 
   $ pypstats.py total -q ProDy_stats.pkl 
   10664
@@ -83,7 +82,7 @@ command::
 Current release
 ---------------
 
-Current release information can be retrieved using :program:`pypstats current` 
+Current release information can be retrieved using **pypstats current** 
 command::
 
   $ pypstats.py release ProDy_stats.pkl 
@@ -97,7 +96,7 @@ command::
 Updates
 -------
 
-Local statistics file can be updated using :program:`pypstats update` command::
+Local statistics file can be updated using **pypstats update** command::
 
   $ pypstats update ProDy
   Fetching content from 'http://pypi.python.org/stats/months/'.
