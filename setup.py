@@ -16,9 +16,10 @@ with open('README.rst') as inp:
     
 __version__ = ''
 with open('prody/__init__.py') as inp:
-    if (line.startswith('__version__')):
-        exec(line.strip())
-        break
+    for line in inp:
+        if (line.startswith('__version__')):
+            exec(line.strip())
+            break
 
 setup(
     name='pypstats',
