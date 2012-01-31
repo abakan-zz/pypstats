@@ -117,7 +117,7 @@ def load_stats(filename):
 
     # Gather download statistics
     if filename and os.path.isfile(filename):
-        LOGGER.info("Loading statistics from '{0:s}'".format(filename))
+        LOGGER.info("Loading statistics from '{0:s}'.".format(filename))
         pkl = open(filename)
         stats = cPickle.load(pkl)
         pkl.close()
@@ -210,7 +210,7 @@ def release_stats(stats):
 
 
     if outname:
-        LOGGER.info("Release statistics are written in '{0:s}'"
+        LOGGER.info("Release statistics are written in '{0:s}'."
                     .format(outname))
         
 
@@ -257,7 +257,8 @@ def monthly_stats(args):
     out.writerow(['Total', total])
     if args.o:
         ostream.close()
-        LOGGER.info("Monthly statistics are written in '{0:s}'".format(args.o))
+        LOGGER.info("Monthly statistics are written in '{0:s}'."
+                    .format(args.o))
 
     if args.p:
         labels = []
