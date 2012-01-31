@@ -152,7 +152,7 @@ def get_version(package, filename):
 def update_stats(args):
     """Update package stats from http://pypi.python.org/stats/months/."""
     
-    package, filename = args.pkg, args.o
+    package, filename = args.pkg, args.s
     if filename is None:
         filename = package_filename(package)
     stats = load_stats(filename)
@@ -374,7 +374,7 @@ subparser = subparsers.add_parser('update',
 subparser.add_argument('-q', '--quiet', help="suppress stderr log messages",
     action='store_true', default=False)
     
-subparser.add_argument('-o', default=None, metavar='FILENAME',
+subparser.add_argument('-s', default=None, metavar='FILENAME',
     help="filename for storing package statistics (default: 'pkg_stats.pkl')")
 
 subparser.add_argument('pkg', help='Python package name')
@@ -384,7 +384,7 @@ subparser.set_defaults(func=update_stats)
 # CURRENT
 
 subparser = subparsers.add_parser('current', 
-    help='write current release details in a CSV file')
+    help='retrieve and output current release information')
 
 subparser.add_argument('-q', '--quiet', help="suppress stderr log messages",
     action='store_true', default=False)
@@ -405,7 +405,7 @@ subparser.set_defaults(func=current_release_csv)
 # MONTHLY
 
 subparser = subparsers.add_parser('monthly', 
-    help='write/plot monthly download statistics in a CSV file')
+    help='write/plot monthly download statistics')
 
 subparser.add_argument('-q', '--quiet', help="suppress stderr log messages",
     action='store_true', default=False)
@@ -432,7 +432,7 @@ subparser.set_defaults(func=monthly_stats)
 # RELEASE
 
 subparser = subparsers.add_parser('release', 
-    help='write release download statistics in a CSV file')
+    help='output download statistics by release')
 
 subparser.add_argument('-q', '--quiet', help="suppress stderr log messages",
     action='store_true', default=False)
@@ -450,7 +450,7 @@ subparser.set_defaults(func=release_stats)
 # TOTAL
 
 subparser = subparsers.add_parser('total',
-    help='print total number of downloads')
+    help='output total number of downloads')
 
 subparser.add_argument('-q', '--quiet', help="suppress stderr log messages",
     action='store_true', default=False)
