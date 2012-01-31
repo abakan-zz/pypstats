@@ -1,12 +1,15 @@
-import platform
+import sys
 from distutils.core import setup
 
-if platform.system() == 'Windows':
-    SCRIPTS = ['pypstats.py']
-else:
-    import shutil
-    shutil.copyfile('pypstats.py', 'pypstats')
-    SCRIPTS = ['pypstats']
+SCRIPTS = []
+if 'install' in sys.argv:
+    import platform
+    if platform.system() == 'Windows':
+        SCRIPTS = ['pypstats.py']
+    else:
+        import shutil
+        shutil.copyfile('pypstats.py', 'pypstats')
+        SCRIPTS = ['pypstats']
 
 with open('README.rst') as inp:
     long_description = inp.read()
