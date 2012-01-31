@@ -459,9 +459,7 @@ subparser.set_defaults(func=total_downloads)
 
 subparser.add_argument('pkl', help='package statistics filename')
 
-
-if __name__ == '__main__':
-
+def main():
     if len(sys.argv) == 1:    
         parser.print_help()
     else:
@@ -469,3 +467,8 @@ if __name__ == '__main__':
         if args.quiet: 
             LOGGER.setLevel(logging.WARNING)
         args.func(args)
+
+
+if __name__ == '__main__':
+
+    main()
