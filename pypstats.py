@@ -420,10 +420,10 @@ subparser.add_argument('-p', metavar='FILENAME', type=str,
     help="figure filename, requires Matplotlib")
              
 subparser.add_argument('--dpi', metavar='INT', type=int, default=72, 
-    help="figure resolution (default: '%(default)s')")
+    help="figure resolution (default: %(default)s)")
 
 subparser.add_argument('--mlabelstep', metavar='INT', type=int, default=2, 
-    help="figure month label step (default: '%(default)s')")
+    help="figure month label step (default: %(default)s)")
 
 subparser.add_argument('pkl', help='package statistics filename')
 
