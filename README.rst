@@ -122,13 +122,53 @@ Updates
 
 Local statistics file can be updated using **pypstats update** command::
 
-  $ pypstats update ProDy
+  $ pypstats update -s ProDy_stats.pkl ProDy
   Fetching content from 'http://pypi.python.org/stats/months/'.
   Parsing monthly statistics file details.
   Nothing to update.
 
 This command will make an incremental update by downloading the files that
 changed since the last update.
+
+Help
+----
+
+To get help, type in a command name with **-h** argument::
+
+  $ pypstats -h
+  usage: pypstats.py [-h] {current,monthly,total,update,release} ...
+
+  Fetch package download statistics from Python Package Index (PyPI). Package
+  needs to be distributed via PyPI.
+
+  optional arguments:
+    -h, --help            show this help message and exit
+
+  subcommands:
+    {current,monthly,total,update,release}
+      update              retrieve or update download statistics
+      current             retrieve and output current release information
+      monthly             output/plot monthly download statistics
+      release             output download statistics by release
+      total               output total number of downloads
+
+  See 'pypstats <command> -h' for more information on a specific command.
+  $ pypstats monthly -h
+  usage: pypstats.py monthly [-h] [-q] [-o FILENAME] [-d DELIMITER]
+                             [-p FILENAME] [--dpi INT] [--mlabelstep INT]
+                             pkl
+
+  positional arguments:
+    pkl               package statistics filename
+
+  optional arguments:
+    -h, --help        show this help message and exit
+    -q, --quiet       suppress stderr log messages
+    -o FILENAME       output CSV filename, if not provided print to stdout
+    -d DELIMITER      output column delimiter (default: ' ')
+    -p FILENAME       figure filename, requires Matplotlib
+    --dpi INT         figure resolution (default: '72')
+    --mlabelstep INT  figure month label step (default: '2')
 
 LICENSE
 =======
