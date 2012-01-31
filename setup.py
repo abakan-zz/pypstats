@@ -15,7 +15,7 @@ with open('README.rst') as inp:
     long_description = inp.read()
     
 __version__ = ''
-with open('prody/__init__.py') as inp:
+with open('pypstats.py') as inp:
     for line in inp:
         if (line.startswith('__version__')):
             exec(line.strip())
