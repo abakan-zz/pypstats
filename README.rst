@@ -48,7 +48,7 @@ monthly stats files are downloaded.
 Monthly stats
 -------------
 
-Monthly statistics can be printed using **pypstats release** command::
+Monthly statistics can be printed using **pypstats monthly** command::
 
   $ pypstats monthly ProDy_stats.pkl 
   Loading statistics from 'ProDy_stats.pkl'.
