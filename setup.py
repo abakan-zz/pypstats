@@ -13,10 +13,16 @@ if 'install' in sys.argv:
 
 with open('README.rst') as inp:
     long_description = inp.read()
+    
+__version__ = ''
+with open('prody/__init__.py') as inp:
+    if (line.startswith('__version__')):
+        exec(line.strip())
+        break
 
 setup(
     name='pypstats',
-    version='1.0',
+    version=__version__,
     author='Ahmet Bakan',
     author_email='ahmetbakan at msn dot com',
     description='Retrieve monthly package download statistics from PyPI',
