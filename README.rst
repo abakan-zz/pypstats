@@ -50,7 +50,7 @@ Monthly stats
 
 Monthly statistics can be printed using **pypstats release** command::
 
-  $ pypstats.py monthly ProDy_stats.pkl 
+  $ pypstats monthly ProDy_stats.pkl 
   Loading statistics from 'ProDy_stats.pkl'.
   Month	Downloads
   2010-11	286
@@ -58,25 +58,42 @@ Monthly statistics can be printed using **pypstats release** command::
   2012-01	1041
   Total	  10664
 
-This information can also be plotted and saved in a :file:`.csv` file as 
+This information can also be plotted and saved in a **.csv** file as 
 follows::
 
-  $ pypstats.py monthly -o monthly.csv -p monthly.png ProDy_stats.pkl
+  $ pypstats monthly -o monthly.csv -p monthly.png ProDy_stats.pkl
   Loading statistics from 'ProDy_stats.pkl'.
   Monthly statistics are written in 'monthly.csv'.
   Monthly downloads plot is saved as 'monthly.png'.
+  
+See an example plot here: http://www.csb.pitt.edu/ProDy/reports/pypi_statistics.html
 
 Release stats
 -------------
 
 Release statistics can be printed using **pypstats release** command::
 
+
+  $ pypstats release ProDy_stats.pkl 
+  Loading statistics from 'ProDy_stats.pkl'.
+  Release	Downloads
+  0.1.0	397
+  ...
+  0.9.2	328
+  Total	10664
+  
+Similarly, output can be written into a **.csv** file as follows::
+
+  $ pypstats release -o release_stats.csv -q ProDy_stats.pkl
+  
+Note that **-q** argument suppresses messages written to **stderr**.
+
 Total downloads
 ---------------
 
 Total number of downloads can be printed using **pypstats total** command::
 
-  $ pypstats.py total -q ProDy_stats.pkl 
+  $ pypstats total -q ProDy_stats.pkl 
   10664
 
 Current release
@@ -85,13 +102,20 @@ Current release
 Current release information can be retrieved using **pypstats current** 
 command::
 
-  $ pypstats.py release ProDy_stats.pkl 
-  Loading statistics from 'ProDy_stats.pkl'.
-  Release	Downloads
-  0.1.0	397
-  ...
-  0.9.2	328
-  Total	10664
+  $ pypstats current -q ProDy
+  File	URL	md5	Type	Py Version	Size	Downloads
+  ProDy-0.9.2.tar.gz	http://pypi.python.org/packages/source/P/ProDy/ProDy-0.9.2.tar.gz	9ad6f6e6012f824ea5e7acb344607eae	Source		711KB	119
+  ProDy-0.9.2.win32-py2.6.exe	http://pypi.python.org/packages/2.6/P/ProDy/ProDy-0.9.2.win32-py2.6.exe	51f8587dcc8fe6d0355327d811ea71c3	MS Windows installer	2.6	455KB	47
+  ProDy-0.9.2.win32-py2.7.exe	http://pypi.python.org/packages/2.7/P/ProDy/ProDy-0.9.2.win32-py2.7.exe	68ba279f3d9e02b38e4f3e6339b41b26	MS Windows installer	2.7	909KB	53
+  ProDy-0.9.2.zip	http://pypi.python.org/packages/source/P/ProDy/ProDy-0.9.2.zip	b447f8b607defd5cda65163e43b32150	Source		744KB	109
+
+This information can be written into a CSV file using reStructured Text style::
+
+  $ pypstats current -q -o current_release.csv --rst ProDy
+ 
+This file can be used in a page prepared using `Sphinx <http://sphinx.pocoo.org/>`_, 
+see for an example: http://www.csb.pitt.edu/ProDy/getprody.html
+
 
 Updates
 -------
