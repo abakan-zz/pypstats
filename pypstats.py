@@ -27,6 +27,8 @@ Information:
 __author__ = 'Ahmet Bakan'
 __copyright__ = 'Copyright (C) 2011-2012 Ahmet Bakan'
 
+__version__ = '1.0.1'
+
 import sys
 import csv
 import bz2
@@ -180,7 +182,7 @@ def update_stats(args):
         LOGGER.info("Package statistics are updated ({0:s}).".format(filename))
         return filename
     
-def release_stats(stats):
+def release_stats(args):
     """Output download stats by release."""
     
     stats, outname, delimiter = args.pkl, args.o, args.d
