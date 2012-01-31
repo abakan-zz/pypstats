@@ -5,9 +5,9 @@ SYNOPSIS
 distributed via `PyPI <http://pypi.python.org/pypi>`_.  Statistics are 
 downloaded from http://pypi.python.org/stats/months/.  This page contains 
 monthly statistics in compressed files starting from June 2010.  These
-files contains information on releases that are removed from PyPI, so
-you will get more complete statistics for packages that were released 
-after June 2010. 
+files contain information on releases that are removed from PyPI, so
+you will get more complete download statistics for packages that were 
+released after June 2010. 
 
 INSTALLATION
 ============
@@ -153,6 +153,9 @@ To get help, type in a command name with **-h** argument::
       total               output total number of downloads
 
   See 'pypstats <command> -h' for more information on a specific command.
+
+::
+
   $ pypstats monthly -h
   usage: pypstats.py monthly [-h] [-q] [-o FILENAME] [-d DELIMITER]
                              [-p FILENAME] [--dpi INT] [--mlabelstep INT]
@@ -174,7 +177,7 @@ LICENSE
 =======
   
 *pypstats* is available under GNU General Public License version 3.  See 
-LICENSE.txt for more details. 
+LICENSE.rst for more details. 
 
 
 SOURCE
