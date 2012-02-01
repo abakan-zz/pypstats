@@ -13,8 +13,8 @@ released after June 2010.
 INSTALLATION
 ============
 
-Download **pypstats-1.{x}.tar.gz**. Extract tarball contents and run 
-**setup.py** as follows::
+Download a package file from http://pypi.python.org/pypi/pypstats. Extract 
+its contents and run **setup.py** as follows::
   
   $ tar -xzf pypstats-1.x.tar.gz
   $ cd pypstats-1.x
