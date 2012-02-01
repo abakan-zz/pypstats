@@ -97,13 +97,13 @@ Total number of downloads can be printed using **pypstats total** command::
   $ pypstats total -q ProDy_stats.pkl 
   10664
 
-Current release
+Latest release
 ---------------
 
-Current release information can be retrieved using **pypstats current** 
+Latest release information can be retrieved using **pypstats latest** 
 command::
 
-  $ pypstats current -q ProDy
+  $ pypstats latest -q ProDy
   File	URL	md5	Type	Py Version	Size	Downloads
   ProDy-0.9.2.tar.gz	http://pypi.python.org/packages/source/P/ProDy/ProDy-0.9.2.tar.gz	9ad6f6e6012f824ea5e7acb344607eae	Source		711KB	119
   ProDy-0.9.2.win32-py2.6.exe	http://pypi.python.org/packages/2.6/P/ProDy/ProDy-0.9.2.win32-py2.6.exe	51f8587dcc8fe6d0355327d811ea71c3	MS Windows installer	2.6	455KB	47
@@ -112,7 +112,7 @@ command::
 
 This information can be written into a CSV file using reStructured Text style::
 
-  $ pypstats current -q -o current_release.csv --rst ProDy
+  $ pypstats latest -q -o latest_release.csv --rst ProDy
  
 This file can be used in a page prepared using `Sphinx <http://sphinx.pocoo.org/>`_, 
 see for an example: http://www.csb.pitt.edu/ProDy/getprody.html
@@ -137,7 +137,7 @@ Help
 To get help, type in a command name with **-h** argument::
 
   $ pypstats -h
-  usage: pypstats.py [-h] {current,monthly,total,update,release} ...
+  usage: pypstats.py [-h] {latest,monthly,total,update,release} ...
 
   Fetch package download statistics from Python Package Index (PyPI). Package
   needs to be distributed via PyPI.
@@ -146,9 +146,9 @@ To get help, type in a command name with **-h** argument::
     -h, --help            show this help message and exit
 
   subcommands:
-    {current,monthly,total,update,release}
+    {latest,monthly,total,update,release}
       update              retrieve or update download statistics
-      current             retrieve and output current release information
+      latest              retrieve and output latest release information
       monthly             output/plot monthly download statistics
       release             output download statistics by release
       total               output total number of downloads
