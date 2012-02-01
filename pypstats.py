@@ -284,8 +284,8 @@ def monthly_stats(args):
                     .format(args.p))
 
 
-def current_release(package):
-    """Retrieve current released data."""
+def latest_release(package):
+    """Retrieve latest released data."""
         
     url = 'http://pypi.python.org/pypi'
     LOGGER.info("Connecting to '{0:s}'.".format(url))
@@ -299,14 +299,14 @@ def current_release(package):
         urls = pypi.release_urls(package, release)
         return urls
 
-def current_release_csv(args):
-    """Output current released data."""
+def latest_release_csv(args):
+    """Output latest released data."""
     
     package, outname, delimiter, rst = args.pkg, args.o, args.d, args.rst
     
-    urls = current_release(package)
+    urls = latest_release(package)
     if not urls:
-        LOGGER.warning('Current release information for {0:s} could not be '
+        LOGGER.warning('Latest release information for {0:s} could not be '
                        'retrieved.'.format(package))
         return
 
@@ -316,7 +316,7 @@ def current_release_csv(args):
         ostream = sys.stdout
     out = csv.writer(ostream, delimiter=delimiter)
     
-    # Write a CSV file with info on and links to the current downloads 
+    # Write a CSV file with info on and links to the latest downloads 
     packagetype_map = {'sdist': 'Source', 
                        'bdist_wininst': 'MS Windows installer'}
     python_version_map = {'source': ''} 
@@ -352,7 +352,7 @@ def current_release_csv(args):
             )
     if outname:
         ostream.close()
-        LOGGER.info("Current release details are written to '{0:s}'."
+        LOGGER.info("Latest release details are written to '{0:s}'."
                     .format(outname))
     return outname
 
@@ -383,10 +383,10 @@ subparser.add_argument('pkg', help='Python package name')
 
 subparser.set_defaults(func=update_stats)
 
-# CURRENT
+# LATEST
 
-subparser = subparsers.add_parser('current', 
-    help='retrieve and output current release information')
+subparser = subparsers.add_parser('latest', 
+    help='retrieve and output latest release information')
 
 subparser.add_argument('-q', '--quiet', help="suppress stderr log messages",
     action='store_true', default=False)
@@ -402,7 +402,7 @@ subparser.add_argument('--rst', default=False, action='store_true',
 
 subparser.add_argument('pkg', help='Python package name')
 
-subparser.set_defaults(func=current_release_csv)
+subparser.set_defaults(func=latest_release_csv)
 
 # MONTHLY
 
