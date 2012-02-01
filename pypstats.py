@@ -27,7 +27,7 @@ Information:
 __author__ = 'Ahmet Bakan'
 __copyright__ = 'Copyright (C) 2011-2012 Ahmet Bakan'
 
-__version__ = '1.0.1'
+__version__ = '1.1'
 
 import sys
 import csv
