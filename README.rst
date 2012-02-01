@@ -181,6 +181,14 @@ LICENSE
 LICENSE.rst for more details. 
 
 
+CHANGES
+=======
+
+v1.1
+----
+
+* Renamed command **current** to **latest**. 
+
 SOURCE
 ======
 
