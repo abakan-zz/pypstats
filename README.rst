@@ -1,14 +1,14 @@
 SYNOPSIS
 ========
 
-*pypstats* is retrieving monthly and per release download statistics of
-packages that are distributed via `PyPI <http://pypi.python.org/pypi>`_.  
-It can used to write **.csv** files, plot monthly stats, and retrieve
+*pypstats* is for retrieving monthly and per release download statistics 
+of packages that are distributed via `PyPI <http://pypi.python.org/pypi>`_.  
+It can be used to write **.csv** files, plot monthly stats, and retrieve
 information on the latest release.  Monthly statistics are stored at 
 http://pypi.python.org/stats/months/ in compressed files starting from 
 June 2010.  These files contain information on releases that are removed 
-from PyPI, so gives a more complete statistics for packages that were 
-released after June 2010.
+from PyPI, so *pypstats* provides complete statistics for packages that 
+are released after June 2010.
 
 INSTALLATION
 ============
