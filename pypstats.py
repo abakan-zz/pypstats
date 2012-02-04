@@ -37,6 +37,7 @@ import logging
 import os.path
 import urllib2
 import datetime
+import tempfile
 from HTMLParser import HTMLParser
 from collections import defaultdict
 
@@ -44,7 +45,11 @@ LOGGER = logging.getLogger('.pypstats')
 LOGGER.setLevel(logging.INFO)
 LOGGER.addHandler(logging.StreamHandler())
 
+TEMP = tempfile.gettempdir() 
+
 class PyPIStatsFile(object):
+    
+    """Access PyPI stats file content."""
     
     def __init__(self, url, month, modified=None, size=None):
         
@@ -54,13 +59,35 @@ class PyPIStatsFile(object):
         self.size = size
     
     def read(self):
-        url = urllib2.urlopen(self.url)
-        stats = bz2.decompress(url.read())
-        url.close()
-        return stats
+        """Return content of stats file after decompressing it. Stats file 
+        may be retrieved from the internet or read from temp folder, if it
+        is up-to-date."""
+        
+        stats = None
+        tempfn = os.path.join(TEMP, 'pypi_month_' + self.month + '.bz2')
+        if os.path.isfile(tempfn):
+            
+            if (datetime.datetime.fromtimestamp(os.stat(tempfn).st_mtime) >= 
+                self.modified):
+                LOGGER.info('Reading {0:s}.'.format(tempfn))
+                with open(tempfn) as inp:
+                    stats = inp.read()
+
+        if stats is None:
+            LOGGER.info('Downloading {0:s}.'.format(self.url))
+            url = urllib2.urlopen(self.url)
+            stats = url.read()
+            url.close()
+            with open(tempfn, 'wb') as out:
+                out.write(stats)
+
+        return bz2.decompress(stats)
                 
 
 class PyPIStatsURLParser(HTMLParser):
+
+    """Parse web folder content and store file details in ``files`` attribute.
+    """
 
     def __init__(self, url):
         
