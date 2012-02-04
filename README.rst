@@ -184,6 +184,13 @@ LICENSE.rst for more details.
 CHANGES
 =======
 
+v1.2
+----
+
+* Renamed script **pypstats** to **pyps**.
+* Downloaded stats files are save to temp folder.  When multiple package stats
+  are updated consequently, content is read from this folder.
+
 v1.1
 ----
 
