@@ -1,16 +1,6 @@
 import sys
 from distutils.core import setup
 
-SCRIPTS = []
-if 'install' in sys.argv:
-    import platform
-    if platform.system() == 'Windows':
-        SCRIPTS = ['pypstats.py']
-    else:
-        import shutil
-        shutil.copyfile('pypstats.py', 'pypstats')
-        SCRIPTS = ['pypstats']
-
 with open('README.rst') as inp:
     long_description = inp.read()
     
@@ -32,7 +22,7 @@ setup(
     py_modules=['pypstats'],
     license='GPLv3',
     keywords=('monthly, package, download, statistics'),
-    scripts=SCRIPTS,
+    scripts=['pyps'],
     classifiers=[
                  'License :: OSI Approved :: GNU General Public License (GPL)',
                  'Operating System :: MacOS',
