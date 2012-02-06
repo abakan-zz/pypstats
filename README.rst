@@ -184,6 +184,11 @@ LICENSE.rst for more details.
 CHANGES
 =======
 
+v1.2.1
+------
+
+* Fixed an installation problem.
+
 v1.2
 ----
 

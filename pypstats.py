@@ -27,7 +27,7 @@ Information:
 __author__ = 'Ahmet Bakan'
 __copyright__ = 'Copyright (C) 2011-2012 Ahmet Bakan'
 
-__version__ = '1.2'
+__version__ = '1.2.1'
 
 import sys
 import csv
@@ -66,7 +66,6 @@ class PyPIStatsFile(object):
         stats = None
         tempfn = os.path.join(TEMP, 'pypi_month_' + self.month + '.bz2')
         if os.path.isfile(tempfn):
-            
             if (datetime.datetime.fromtimestamp(os.stat(tempfn).st_mtime) >= 
                 self.modified):
                 LOGGER.info('Reading {0:s}.'.format(tempfn))
