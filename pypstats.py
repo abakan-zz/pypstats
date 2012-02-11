@@ -41,6 +41,8 @@ import tempfile
 from HTMLParser import HTMLParser
 from collections import defaultdict
 
+__all__ = ['pyps_release', 'pyps_monthly', 'pyps_update']
+
 LOGGER = logging.getLogger('.pypstats')
 LOGGER.setLevel(logging.INFO)
 LOGGER.addHandler(logging.StreamHandler())
@@ -177,10 +179,18 @@ def get_version(package, filename):
         i += 1
     return version
 
+
+
 def update_stats(args):
     """Update package stats from http://pypi.python.org/stats/months/."""
     
-    package, filename = args.pkg, args.s
+    return pyps_update(args.pkg, args.s)
+    
+def pyps_update(package, filename=None):
+    """Update monthly *package* statistics *filename* or retrieve statistics
+    if the command is run for the first time.  Default *filename* is 
+    **package_stats.pkl**."""
+    
     if filename is None:
         filename = package_filename(package)
     stats = load_stats(filename)
@@ -208,11 +218,10 @@ def update_stats(args):
         LOGGER.info("Package statistics are updated ({0:s}).".format(filename))
         return filename
     
-def release_stats(args):
-    """Output download stats by release."""
-    
-    stats, outname, delimiter = args.pkl, args.o, args.d
-    
+def pyps_release(pkl):
+    """Return a list of tuples that contains release and number of downloads 
+    parsed from *pkl* monthly stats file."""
+
     stats = load_stats(stats)
     releases = defaultdict(int)
     for month in stats.itervalues(): 
@@ -222,6 +231,15 @@ def release_stats(args):
             releases[key] += value
     releases = releases.items()
     releases.sort()
+
+    return releases
+    
+def release_stats(args):
+    """Output download stats by release."""
+    
+    stats, outname, delimiter = args.pkl, args.o, args.d
+    
+    releases = pyps_release(stats)
 
     if outname:
         ostream = open(outname, 'wb')
@@ -253,11 +271,12 @@ def total_downloads(args):
                 continue
             total += value
     sys.stdout.write(str(total) + '\n')
+    
+def pyps_monthly(pkl):
+    """Return a list of tuples that contains month and number of downloads 
+    parsed from *pkl* monthly stats file."""
 
-def monthly_stats(args):
-    """Output download stats by month."""
-
-    stats = load_stats(args.pkl)
+    stats = load_stats(pkl)
     months = []
     for month, stats in stats.iteritems(): 
         counts = 0
@@ -268,6 +287,14 @@ def monthly_stats(args):
         if counts > 0:
             months.append((month, counts))
     months.sort()
+    
+    return months
+
+def monthly_stats(args):
+    """Output download stats by month."""
+
+    months = pyps_monthly(args.pkl)
+    
     if not months:
         LOGGER.warning("Empty or no stats file: '{0:s}'".format(args.pkl))
         return
