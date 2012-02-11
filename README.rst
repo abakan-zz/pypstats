@@ -10,6 +10,7 @@ June 2010.  These files contain information on releases that are removed
 from PyPI, so *pypstats* provides complete statistics for packages that 
 are released after June 2010.
 
+
 INSTALLATION
 ============
 
@@ -24,6 +25,7 @@ Or, if if you have `Easy Install <http://peak.telecommunity.com/DevCenter/EasyIn
 installed, type the following::
 
   $ easy_install -U pypstats
+
 
 USAGE
 =====
@@ -43,7 +45,9 @@ and save them locally using **pypstats update** command::
   Package statistics are updated (ProDy_stats.pkl).
 
 Retrieving statistics at the first use will take some time, since all 
-monthly stats files are downloaded.
+monthly stats files are downloaded. Note that downloaded files will be
+save in temporary folder, unless ``--nocache`` option is passed.  Saving
+downloaded files will make building stats file for multiple packages faster.
 
 
 Monthly stats
@@ -69,6 +73,7 @@ follows::
   
 See an example plot here: http://www.csb.pitt.edu/ProDy/reports/pypi_statistics.html
 
+
 Release stats
 -------------
 
@@ -89,6 +94,7 @@ Similarly, output can be written into a **.csv** file as follows::
   
 Note that **-q** argument suppresses messages written to **stderr**.
 
+
 Total downloads
 ---------------
 
@@ -96,6 +102,7 @@ Total number of downloads can be printed using **pypstats total** command::
 
   $ pypstats total -q ProDy_stats.pkl 
   10664
+
 
 Latest release
 ---------------
@@ -130,6 +137,7 @@ Local statistics file can be updated using **pypstats update** command::
 
 This command will make an incremental update by downloading the files that
 changed since the last update.
+
 
 Help
 ----
@@ -186,6 +194,7 @@ directly in Python code:
 * ``pyps_release(pkl)`` - return release download statistics
 * ``pyps_total(pkl)`` - return total number of downloads
 
+
 LICENSE
 =======
   
@@ -220,6 +229,7 @@ v1.1
 ----
 
 * Renamed command **current** to **latest**. 
+
 
 SOURCE
 ======
