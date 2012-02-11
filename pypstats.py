@@ -27,11 +27,13 @@ Information:
 __author__ = 'Ahmet Bakan'
 __copyright__ = 'Copyright (C) 2011-2012 Ahmet Bakan'
 
-__version__ = '1.2.1'
+__version__ = '1.3'
 
 import sys
 import csv
 import bz2
+import glob
+import time
 import cPickle
 import logging
 import os.path
@@ -41,7 +43,7 @@ import tempfile
 from HTMLParser import HTMLParser
 from collections import defaultdict
 
-__all__ = ['pyps_release', 'pyps_monthly', 'pyps_update']
+__all__ = ['pyps_release', 'pyps_monthly', 'pyps_update', 'pyps_total']
 
 LOGGER = logging.getLogger('.pypstats')
 LOGGER.setLevel(logging.INFO)
@@ -60,27 +62,36 @@ class PyPIStatsFile(object):
         self.modified = modified
         self.size = size
     
-    def read(self):
+    def read(self, cache=True):
         """Return content of stats file after decompressing it. Stats file 
         may be retrieved from the internet or read from temp folder, if it
         is up-to-date."""
         
         stats = None
-        tempfn = os.path.join(TEMP, 'pypi_month_' + self.month + '.bz2')
-        if os.path.isfile(tempfn):
-            if (datetime.datetime.fromtimestamp(os.stat(tempfn).st_mtime) >= 
-                self.modified):
+
+        if cache:        
+            tempfn = os.path.join(TEMP, 'pypi_month_{0:s}_{1:d}.bz2'.format(
+                    self.month, int(time.mktime(self.modified.timetuple()))))
+            if os.path.isfile(tempfn):
                 LOGGER.info('Reading {0:s}.'.format(tempfn))
                 with open(tempfn) as inp:
                     stats = inp.read()
+            else:
+                for fn in glob.glob('pypi_month_{0:s}_*.bz2'
+                                    .format(self.month)): 
+                    try:
+                        os.remove(fn)
+                    except OSError:
+                        LOGGER.warn('Could not remove cashed file: ' + fn)
 
         if stats is None:
             LOGGER.info('Downloading {0:s}.'.format(self.url))
             url = urllib2.urlopen(self.url)
             stats = url.read()
             url.close()
-            with open(tempfn, 'wb') as out:
-                out.write(stats)
+            if cache:
+                with open(tempfn, 'wb') as out:
+                    out.write(stats)
 
         return bz2.decompress(stats)
                 
@@ -186,11 +197,13 @@ def update_stats(args):
     
     return pyps_update(args.pkg, args.s)
     
-def pyps_update(package, filename=None):
-    """Update monthly *package* statistics *filename* or retrieve statistics
-    if the command is run for the first time.  Default *filename* is 
-    **package_stats.pkl**."""
+def pyps_update(package, pkl=None, cache=True):
+    """Update monthly *package* statistics in *pkl* or retrieve statistics
+    if the command is run for the first time.  Default *pkl* filename is 
+    **package_stats.pkl**.  When *cache* is true, downloaded files will be 
+    save to temporary folder for later use."""
     
+    filename = pkl
     if filename is None:
         filename = package_filename(package)
     stats = load_stats(filename)
@@ -204,7 +217,7 @@ def pyps_update(package, filename=None):
         stats[f.month] = defaultdict(int)
         month = stats[f.month]
         month['modified'] = f.modified
-        for line in f.read().split('\n'):
+        for line in f.read(cache).split('\n'):
             if not line.startswith(package):
                 continue
             items = line.split(',')
@@ -222,7 +235,7 @@ def pyps_release(pkl):
     """Return a list of tuples that contains release and number of downloads 
     parsed from *pkl* monthly stats file."""
 
-    stats = load_stats(stats)
+    stats = load_stats(pkl)
     releases = defaultdict(int)
     for month in stats.itervalues(): 
         for key, value in month.iteritems():
@@ -263,14 +276,20 @@ def release_stats(args):
 def total_downloads(args):
     """Output number of total downloads."""
 
-    stats = load_stats(args.pkl)
+    
+    sys.stdout.write(str(pyps_total(args.pkl)) + '\n')
+
+def pyps_total(pkl):    
+    """Return total number of package downloads from *pkl*."""
+    
+    stats = load_stats(pkl)
     total = 0
     for month in stats.itervalues(): 
         for key, value in month.iteritems():
             if key == 'modified':
                 continue
             total += value
-    sys.stdout.write(str(total) + '\n')
+    return total
     
 def pyps_monthly(pkl):
     """Return a list of tuples that contains month and number of downloads 
