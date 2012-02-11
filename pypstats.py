@@ -194,14 +194,14 @@ def get_version(package, filename):
 
 def update_stats(args):
     """Update package stats from http://pypi.python.org/stats/months/."""
-    
-    return pyps_update(args.pkg, args.s)
+
+    return pyps_update(args.pkg, args.s, args.nocache)
     
 def pyps_update(package, pkl=None, cache=True):
     """Update monthly *package* statistics in *pkl* or retrieve statistics
     if the command is run for the first time.  Default *pkl* filename is 
     **package_stats.pkl**.  When *cache* is true, downloaded files will be 
-    save to temporary folder for later use."""
+    save to '{0:s}' folder for later use.""".format(TEMP)
     
     filename = pkl
     if filename is None:
@@ -450,6 +450,10 @@ subparser.add_argument('-q', '--quiet', help="suppress stderr log messages",
     
 subparser.add_argument('-s', default=None, metavar='FILENAME',
     help="filename for storing package statistics (default: 'pkg_stats.pkl')")
+
+subparser.add_argument('-n', '--nocache', 
+    help="do not save downloaded files in '{0:s}'".format(TEMP), 
+    action='store_false', default=True)
 
 subparser.add_argument('pkg', help='Python package name')
 
