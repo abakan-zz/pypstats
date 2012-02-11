@@ -174,6 +174,18 @@ To get help, type in a command name with **-h** argument::
     --dpi INT         figure resolution (default: '72')
     --mlabelstep INT  figure month label step (default: '2')
 
+
+Functions
+---------
+
+``from pypstats import *`` imports the following functions which can be used 
+directly in Python code:
+
+* ``pyps_update(package, pkl, cache)`` - update package statistics
+* ``pyps_monthly(pkl)`` - return monthly download statistics
+* ``pyps_release(pkl)`` - return release download statistics
+* ``pyps_total(pkl)`` - return total number of downloads
+
 LICENSE
 =======
   
@@ -183,6 +195,14 @@ LICENSE.rst for more details.
 
 CHANGES
 =======
+
+v1.3
+------
+
+* Added new functions that can be used directly in Python code. See usage 
+  section above.
+* Using timestamps when saving downloaded stats file so that time zone 
+  differences do not cause a problem.
 
 v1.2.1
 ------
