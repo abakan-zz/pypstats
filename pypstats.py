@@ -265,6 +265,7 @@ def release_stats(args):
     for rel in releases:
         out.writerow(rel)
         total += rel[1]
+    out.writerow(['Mean', total/len(releases)]) 
     out.writerow(['Total', total])
 
 
