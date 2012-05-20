@@ -27,20 +27,25 @@ Information:
 __author__ = 'Ahmet Bakan'
 __copyright__ = 'Copyright (C) 2011-2012 Ahmet Bakan'
 
-__version__ = '1.3'
+__version__ = '1.4'
 
 import sys
+_PY3K = sys.version_info[0] > 2
 import csv
 import bz2
 import glob
 import time
-import cPickle
+import pickle
 import logging
 import os.path
-import urllib2
+if _PY3K:
+    from urllib.request import urlopen
+    from html.parser import HTMLParser
+else:
+    from urllib2 import urlopen
+    from HTMLParser import HTMLParser
 import datetime
 import tempfile
-from HTMLParser import HTMLParser
 from collections import defaultdict
 
 __all__ = ['pyps_release', 'pyps_monthly', 'pyps_update', 'pyps_total']
@@ -86,7 +91,7 @@ class PyPIStatsFile(object):
 
         if stats is None:
             LOGGER.info('Downloading {0:s}.'.format(self.url))
-            url = urllib2.urlopen(self.url)
+            url = urlopen(self.url)
             stats = url.read()
             url.close()
             if cache:
@@ -137,8 +142,7 @@ class PyPIStatsURLParser(HTMLParser):
 def fetchURLs(url='http://pypi.python.org/stats/months/'):
 
     LOGGER.info("Fetching content from '{0:s}'.".format(url))
-    import urllib2
-    stats_months = urllib2.urlopen(url)
+    stats_months = urlopen(url)
     feed = stats_months.read()
     stats_months.close()
     
@@ -160,7 +164,7 @@ def load_stats(filename):
     if filename and os.path.isfile(filename):
         LOGGER.info("Loading statistics from '{0:s}'.".format(filename))
         pkl = open(filename)
-        stats = cPickle.load(pkl)
+        stats = pickle.load(pkl)
         pkl.close()
         return stats
     else:
@@ -171,7 +175,7 @@ def save_stats(filename, stats):
     """Pickle package stats dictionary."""
 
     pkl = open(filename, 'wb')
-    cPickle.dump(stats, pkl)
+    pickle.dump(stats, pkl)
     pkl.close()
     return filename
 
@@ -237,8 +241,8 @@ def pyps_release(pkl):
 
     stats = load_stats(pkl)
     releases = defaultdict(int)
-    for month in stats.itervalues(): 
-        for key, value in month.iteritems():
+    for month in stats.values(): 
+        for key, value in month.items():
             if key == 'modified':
                 continue
             releases[key] += value
@@ -285,8 +289,8 @@ def pyps_total(pkl):
     
     stats = load_stats(pkl)
     total = 0
-    for month in stats.itervalues(): 
-        for key, value in month.iteritems():
+    for month in stats.values(): 
+        for key, value in month.items():
             if key == 'modified':
                 continue
             total += value
@@ -298,9 +302,9 @@ def pyps_monthly(pkl):
 
     stats = load_stats(pkl)
     months = []
-    for month, stats in stats.iteritems(): 
+    for month, stats in stats.items(): 
         counts = 0
-        for key, value in stats.iteritems():
+        for key, value in stats.items():
             if key == 'modified':
                 continue
             counts += value
@@ -344,7 +348,7 @@ def monthly_stats(args):
         import numpy as np
         import matplotlib.pyplot as plt
         plt.figure(figsize=(7.5,4))
-        plt.bar(range(len(counts)), counts, color='black')
+        plt.bar(np.arange(len(counts)), counts, color='black')
         plt.xticks(np.arange(len(labels))[::args.mlabelstep]+0.5, 
                    labels[::args.mlabelstep], rotation=15, fontsize=10)
         plt.yticks(plt.yticks()[0], fontsize=10)
@@ -362,8 +366,11 @@ def latest_release(package):
         
     url = 'http://pypi.python.org/pypi'
     LOGGER.info("Connecting to '{0:s}'.".format(url))
-    import xmlrpclib
-    pypi = xmlrpclib.Server(url)
+    if _PY3K:
+        from xmlrpc.client import Server
+    else:
+        from xmlrpclib import Server
+    pypi = Server(url)
     
     show_hidden = False
     releases = pypi.package_releases(package, show_hidden)
