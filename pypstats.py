@@ -151,10 +151,11 @@ def fetchURLs(url='http://pypi.python.org/stats/months/'):
     parser.feed(feed)
     return parser
 
+PKL_SUFFIX = '_stats.pkl'
 
 def package_filename(package):
     
-    return package + '_stats.pkl'
+    return package + PKL_SUFFIX
 
 def load_stats(filename):
     """Load package stats dictionary from filename.  If file is not found, 
@@ -207,6 +208,8 @@ def pyps_update(package, pkl=None, cache=True):
     **package_stats.pkl**.  When *cache* is true, downloaded files will be 
     save to '{0:s}' folder for later use.""".format(TEMP)
     
+    if os.path.isfile(package) and package.endswith(PKL_SUFFIX):        
+        package = package[:-len(PKL_SUFFIX)]
     filename = pkl
     if filename is None:
         filename = package_filename(package)
