@@ -36,7 +36,7 @@ First use
 Before statistics can be printed or plotted, you need to retrieve statistics 
 and save them locally using **pypstats update** command::
 
-  $ pypstats update ProDy
+  $ pyps update ProDy
   Fetching content from 'http://pypi.python.org/stats/months/'.
   Parsing monthly statistics file details.
   Updating statistics for 2010-06.
@@ -55,7 +55,7 @@ Monthly stats
 
 Monthly statistics can be printed using **pypstats monthly** command::
 
-  $ pypstats monthly ProDy_stats.pkl 
+  $ pyps monthly ProDy_stats.pkl 
   Loading statistics from 'ProDy_stats.pkl'.
   Month	Downloads
   2010-11	286
@@ -66,7 +66,7 @@ Monthly statistics can be printed using **pypstats monthly** command::
 This information can also be plotted and saved in a **.csv** file as 
 follows::
 
-  $ pypstats monthly -o monthly.csv -p monthly.png ProDy_stats.pkl
+  $ pyps monthly -o monthly.csv -p monthly.png ProDy_stats.pkl
   Loading statistics from 'ProDy_stats.pkl'.
   Monthly statistics are written in 'monthly.csv'.
   Monthly downloads plot is saved as 'monthly.png'.
@@ -80,7 +80,7 @@ Release stats
 Release statistics can be printed using **pypstats release** command::
 
 
-  $ pypstats release ProDy_stats.pkl 
+  $ pyps release ProDy_stats.pkl 
   Loading statistics from 'ProDy_stats.pkl'.
   Release	Downloads
   0.1.0	397
@@ -90,7 +90,7 @@ Release statistics can be printed using **pypstats release** command::
   
 Similarly, output can be written into a **.csv** file as follows::
 
-  $ pypstats release -o release_stats.csv -q ProDy_stats.pkl
+  $ pyps release -o release_stats.csv -q ProDy_stats.pkl
   
 Note that **-q** argument suppresses messages written to **stderr**.
 
@@ -100,7 +100,7 @@ Total downloads
 
 Total number of downloads can be printed using **pypstats total** command::
 
-  $ pypstats total -q ProDy_stats.pkl 
+  $ pyps total -q ProDy_stats.pkl 
   10664
 
 
@@ -110,7 +110,7 @@ Latest release
 Latest release information can be retrieved using **pypstats latest** 
 command::
 
-  $ pypstats latest -q ProDy
+  $ pyps latest -q ProDy
   File	URL	md5	Type	Py Version	Size	Downloads
   ProDy-0.9.2.tar.gz	http://pypi.python.org/packages/source/P/ProDy/ProDy-0.9.2.tar.gz	9ad6f6e6012f824ea5e7acb344607eae	Source		711KB	119
   ProDy-0.9.2.win32-py2.6.exe	http://pypi.python.org/packages/2.6/P/ProDy/ProDy-0.9.2.win32-py2.6.exe	51f8587dcc8fe6d0355327d811ea71c3	MS Windows installer	2.6	455KB	47
@@ -119,7 +119,7 @@ command::
 
 This information can be written into a CSV file using reStructured Text style::
 
-  $ pypstats latest -q -o latest_release.csv --rst ProDy
+  $ pyps latest -q -o latest_release.csv --rst ProDy
  
 This file can be used in a page prepared using `Sphinx <http://sphinx.pocoo.org/>`_, 
 see for an example: http://www.csb.pitt.edu/ProDy/getprody.html
@@ -130,7 +130,7 @@ Updates
 
 Local statistics file can be updated using **pypstats update** command::
 
-  $ pypstats update -s ProDy_stats.pkl ProDy
+  $ pyps update -s ProDy_stats.pkl ProDy
   Fetching content from 'http://pypi.python.org/stats/months/'.
   Parsing monthly statistics file details.
   Nothing to update.
@@ -144,7 +144,7 @@ Help
 
 To get help, type in a command name with **-h** argument::
 
-  $ pypstats -h
+  $ pyps -h
   usage: pypstats.py [-h] {latest,monthly,total,update,release} ...
 
   Fetch package download statistics from Python Package Index (PyPI). Package
@@ -165,7 +165,7 @@ To get help, type in a command name with **-h** argument::
 
 ::
 
-  $ pypstats monthly -h
+  $ pyps monthly -h
   usage: pypstats.py monthly [-h] [-q] [-o FILENAME] [-d DELIMITER]
                              [-p FILENAME] [--dpi INT] [--mlabelstep INT]
                              pkl
@@ -204,6 +204,13 @@ LICENSE.rst for more details.
 
 CHANGES
 =======
+
+v1.4
+------
+
+* Made compatible with Python 3.
+
+* Added package name prediction from filename.
 
 v1.3
 ------
