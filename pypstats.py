@@ -386,7 +386,7 @@ def latest_release_csv(args):
     """Output latest released data."""
     
     package, outname, delimiter, rst = args.pkg, args.o, args.d, args.rst
-    
+    no_md5 = args.no_md5
     urls = latest_release(package)
     if not urls:
         LOGGER.warning('Latest release information for {0:s} could not be '
@@ -406,33 +406,57 @@ def latest_release_csv(args):
     if rst:
         out.writerow(['File', 'Type', 'Py Version', 'Size', 'Downloads'])
     else:
-        out.writerow(['File', 'URL', 'md5', 'Type', 
-                      'Py Version', 'Size', 'Downloads'])
+        if no_md5:
+            out.writerow(['File', 'URL', 'md5', 'Type', 
+                          'Py Version', 'Size', 'Downloads'])
+        else:
+            out.writerow(['File', 'URL', 'Type', 
+                          'Py Version', 'Size', 'Downloads'])
+
     for url in urls:
         url['packagetype'] = packagetype_map.get(url['packagetype'], 
                                                  url['packagetype'])
         url['python_version'] = python_version_map.get(url['python_version'], 
                                                        url['python_version'])
         if rst:
-            out.writerow(
-                ['`{0[filename]:s} <{0[url]:s}>`_ '
-                 '(`md5 <http://pypi.python.org/pypi?:action=show_md5&'
-                 'digest={0[md5_digest]:s}>`_)'.format(url),
-                 '{0[packagetype]:s}'.format(url),
-                 '{0[python_version]:s}'.format(url),
-                 '{0:d}KB'.format(int(url['size']/1024)),
-                 '{0[downloads]:d}'.format(url)]            
-            )
+            if no_md5:
+                out.writerow(
+                    ['`{0[filename]:s} <{0[url]:s}>`_'.format(url),
+                     '{0[packagetype]:s}'.format(url),
+                     '{0[python_version]:s}'.format(url),
+                     '{0:d}KB'.format(int(url['size']/1024)),
+                     '{0[downloads]:d}'.format(url)]            
+                )
+            else:
+                out.writerow(
+                    ['`{0[filename]:s} <{0[url]:s}>`_'
+                     ' (`md5 <http://pypi.python.org/pypi?:action=show_md5&'
+                     'digest={0[md5_digest]:s}>`_)'.format(url),
+                     '{0[packagetype]:s}'.format(url),
+                     '{0[python_version]:s}'.format(url),
+                     '{0:d}KB'.format(int(url['size']/1024)),
+                     '{0[downloads]:d}'.format(url)]            
+                )
         else:
-            out.writerow(
-                ['{0[filename]:s}'.format(url),
-                 '{0[url]:s}'.format(url),
-                 '{0[md5_digest]:s}'.format(url),
-                 '{0[packagetype]:s}'.format(url),
-                 '{0[python_version]:s}'.format(url),
-                 '{0:d}KB'.format(int(url['size']/1024)),
-                 '{0[downloads]:d}'.format(url)]            
-            )
+            if no_md5:
+                out.writerow(
+                    ['{0[filename]:s}'.format(url),
+                     '{0[url]:s}'.format(url),
+                     '{0[packagetype]:s}'.format(url),
+                     '{0[python_version]:s}'.format(url),
+                     '{0:d}KB'.format(int(url['size']/1024)),
+                     '{0[downloads]:d}'.format(url)]            
+                )
+            else:
+                out.writerow(
+                    ['{0[filename]:s}'.format(url),
+                     '{0[url]:s}'.format(url),
+                     '{0[md5_digest]:s}'.format(url),
+                     '{0[packagetype]:s}'.format(url),
+                     '{0[python_version]:s}'.format(url),
+                     '{0:d}KB'.format(int(url['size']/1024)),
+                     '{0[downloads]:d}'.format(url)]            
+                )
     if outname:
         ostream.close()
         LOGGER.info("Latest release details are written to '{0:s}'."
@@ -483,6 +507,9 @@ subparser.add_argument('-o', default=None, metavar='FILENAME',
              
 subparser.add_argument('-d', default='\t', metavar='DELIMITER',
         help="CSV file column delimiter (default: '%(default)s')")
+
+subparser.add_argument('-n', '--no-md5', help="exclude md5 information",
+    action='store_true', default=False, dest='no_md5')
 
 subparser.add_argument('--rst', default=False, action='store_true',
         help="write reStructured text")
