@@ -39,10 +39,10 @@ import pickle
 import logging
 import os.path
 if _PY3K:
-    from urllib.request import urlopen
+    from urllib.request import urlopen, URLError
     from html.parser import HTMLParser
 else:
-    from urllib2 import urlopen
+    from urllib2 import urlopen, URLError
     from HTMLParser import HTMLParser
 import datetime
 import tempfile
@@ -91,15 +91,18 @@ class PyPIStatsFile(object):
 
         if stats is None:
             LOGGER.info('Downloading {0:s}.'.format(self.url))
-            url = urlopen(self.url)
-            stats = url.read()
-            url.close()
-            if cache:
-                with open(tempfn, 'wb') as out:
-                    out.write(stats)
+            try:
+                url = urlopen(self.url)
+                stats = url.read()
+                url.close()
+                if cache:
+                    with open(tempfn, 'wb') as out:
+                        out.write(stats)
 
-        return bz2.decompress(stats)
-                
+                return bz2.decompress(stats)
+            except URLError:
+                LOGGER.info("Unable to download stats from pypi.")
+
 
 class PyPIStatsURLParser(HTMLParser):
 
@@ -142,14 +145,17 @@ class PyPIStatsURLParser(HTMLParser):
 def fetchURLs(url='http://pypi.python.org/stats/months/'):
 
     LOGGER.info("Fetching content from '{0:s}'.".format(url))
-    stats_months = urlopen(url)
-    feed = stats_months.read()
-    stats_months.close()
-    
-    LOGGER.info("Parsing monthly statistics file details.")
-    parser = PyPIStatsURLParser(url)
-    parser.feed(feed)
-    return parser
+    try:
+        stats_months = urlopen(url)
+        feed = stats_months.read()
+        stats_months.close()
+        LOGGER.info("Parsing monthly statistics file details.")
+        parser = PyPIStatsURLParser(url)
+        parser.feed(feed)
+        return parser
+    except URLError:
+        LOGGER.info("Unable to download stats from pypi.")
+
 
 PKL_SUFFIX = '_stats.pkl'
 
@@ -215,6 +221,8 @@ def pyps_update(package, pkl=None, cache=True):
         filename = package_filename(package)
     stats = load_stats(filename)
     p = fetchURLs()
+    if p is None:
+        return
     noupdates = True
     for f in p.files:
         if f.month in stats and stats[f.month]['modified'] == f.modified: 
