@@ -1,4 +1,4 @@
-SYNOPSIS
+pypstats
 ========
 
 *pypstats* is for retrieving monthly and per release download statistics 
@@ -10,9 +10,14 @@ June 2010.  These files contain information on releases that are removed
 from PyPI, so *pypstats* provides complete statistics for packages that 
 are released after June 2010.
 
+.. note::
+   http://pypi.python.org/stats/months/ has not been updated since June 2013,
+   and I couldn't find out why. Please let me know if you find something,
+   and I will try to update the code asap.
+
 
 INSTALLATION
-============
+------------
 
 Download a package file from http://pypi.python.org/pypi/pypstats. Extract 
 its contents and run **setup.py** as follows::
@@ -27,11 +32,11 @@ installed, type the following::
   $ easy_install -U pypstats
 
 
-USAGE
-=====
+HOW TO USE
+----------
 
 First use
----------
+^^^^^^^^^
 
 Before statistics can be printed or plotted, you need to retrieve statistics 
 and save them locally using **pypstats update** command::
@@ -51,7 +56,7 @@ downloaded files will make building stats file for multiple packages faster.
 
 
 Monthly stats
--------------
+^^^^^^^^^^^^^
 
 Monthly statistics can be printed using **pypstats monthly** command::
 
@@ -75,7 +80,7 @@ See an example plot here: http://www.csb.pitt.edu/ProDy/reports/pypi_statistics.
 
 
 Release stats
--------------
+^^^^^^^^^^^^^
 
 Release statistics can be printed using **pypstats release** command::
 
@@ -96,7 +101,7 @@ Note that **-q** argument suppresses messages written to **stderr**.
 
 
 Total downloads
----------------
+^^^^^^^^^^^^^^^
 
 Total number of downloads can be printed using **pypstats total** command::
 
@@ -105,7 +110,7 @@ Total number of downloads can be printed using **pypstats total** command::
 
 
 Latest release
----------------
+^^^^^^^^^^^^^^
 
 Latest release information can be retrieved using **pypstats latest** 
 command::
@@ -121,12 +126,11 @@ This information can be written into a CSV file using reStructured Text style::
 
   $ pyps latest -q -o latest_release.csv --rst ProDy
  
-This file can be used in a page prepared using `Sphinx <http://sphinx.pocoo.org/>`_, 
-see for an example: http://www.csb.pitt.edu/ProDy/getprody.html
+This file can be used in a page prepared using `Sphinx <http://sphinx.pocoo.org/>`_.
 
 
 Updates
--------
+^^^^^^^
 
 Local statistics file can be updated using **pypstats update** command::
 
@@ -140,7 +144,7 @@ changed since the last update.
 
 
 Help
-----
+^^^^
 
 To get help, type in a command name with **-h** argument::
 
@@ -184,7 +188,7 @@ To get help, type in a command name with **-h** argument::
 
 
 Functions
----------
+^^^^^^^^^
 
 ``from pypstats import *`` imports the following functions which can be used 
 directly in Python code:
@@ -196,14 +200,14 @@ directly in Python code:
 
 
 LICENSE
-=======
+-------
   
 *pypstats* is available under GNU General Public License version 3.  See 
 LICENSE.rst for more details. 
 
 
 CHANGES
-=======
+-------
 
 v1.4
 ------
@@ -238,14 +242,14 @@ v1.1
 * Renamed command **current** to **latest**. 
 
 
-SOURCE
-======
+SOURCE CODE
+-----------
 
 http://github.com/abakan/pypstats
 
 
 REPORT ISSUES
-=============
+-------------
 
 https://github.com/abakan/pypstats/issues
   
