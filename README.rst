@@ -1,13 +1,13 @@
 pypstats
 ========
 
-*pypstats* is for retrieving monthly and per release download statistics 
-of packages that are distributed via `PyPI <http://pypi.python.org/pypi>`_.  
+*pypstats* is for retrieving monthly and per release download statistics
+of packages that are distributed via `PyPI <http://pypi.python.org/pypi>`_.
 It can be used to write **.csv** files, plot monthly stats, and retrieve
-information on the latest release.  Monthly statistics are stored at 
-http://pypi.python.org/stats/months/ in compressed files starting from 
-June 2010.  These files contain information on releases that are removed 
-from PyPI, so *pypstats* provides complete statistics for packages that 
+information on the latest release.  Monthly statistics are stored at
+http://pypi.python.org/stats/months/ in compressed files starting from
+June 2010.  These files contain information on releases that are removed
+from PyPI, so *pypstats* provides complete statistics for packages that
 are released after June 2010.
 
 .. note::
@@ -19,9 +19,9 @@ are released after June 2010.
 INSTALLATION
 ------------
 
-Download a package file from http://pypi.python.org/pypi/pypstats. Extract 
+Download a package file from http://pypi.python.org/pypi/pypstats. Extract
 its contents and run **setup.py** as follows::
-  
+
   $ tar -xzf pypstats-1.x.tar.gz
   $ cd pypstats-1.x
   $ python setup.py install
@@ -38,7 +38,7 @@ HOW TO USE
 First use
 ^^^^^^^^^
 
-Before statistics can be printed or plotted, you need to retrieve statistics 
+Before statistics can be printed or plotted, you need to retrieve statistics
 and save them locally using **pypstats update** command::
 
   $ pyps update ProDy
@@ -49,7 +49,7 @@ and save them locally using **pypstats update** command::
   Updating statistics for 2012-01.
   Package statistics are updated (ProDy_stats.pkl).
 
-Retrieving statistics at the first use will take some time, since all 
+Retrieving statistics at the first use will take some time, since all
 monthly stats files are downloaded. Note that downloaded files will be
 save in temporary folder, unless ``--nocache`` option is passed.  Saving
 downloaded files will make building stats file for multiple packages faster.
@@ -60,7 +60,7 @@ Monthly stats
 
 Monthly statistics can be printed using **pypstats monthly** command::
 
-  $ pyps monthly ProDy_stats.pkl 
+  $ pyps monthly ProDy_stats.pkl
   Loading statistics from 'ProDy_stats.pkl'.
   Month	Downloads
   2010-11	286
@@ -68,15 +68,13 @@ Monthly statistics can be printed using **pypstats monthly** command::
   2012-01	1041
   Total	  10664
 
-This information can also be plotted and saved in a **.csv** file as 
+This information can also be plotted and saved in a **.csv** file as
 follows::
 
   $ pyps monthly -o monthly.csv -p monthly.png ProDy_stats.pkl
   Loading statistics from 'ProDy_stats.pkl'.
   Monthly statistics are written in 'monthly.csv'.
   Monthly downloads plot is saved as 'monthly.png'.
-  
-See an example plot here: http://www.csb.pitt.edu/ProDy/reports/pypi_statistics.html
 
 
 Release stats
@@ -85,18 +83,18 @@ Release stats
 Release statistics can be printed using **pypstats release** command::
 
 
-  $ pyps release ProDy_stats.pkl 
+  $ pyps release ProDy_stats.pkl
   Loading statistics from 'ProDy_stats.pkl'.
   Release	Downloads
   0.1.0	397
   ...
   0.9.2	328
   Total	10664
-  
+
 Similarly, output can be written into a **.csv** file as follows::
 
   $ pyps release -o release_stats.csv -q ProDy_stats.pkl
-  
+
 Note that **-q** argument suppresses messages written to **stderr**.
 
 
@@ -105,14 +103,14 @@ Total downloads
 
 Total number of downloads can be printed using **pypstats total** command::
 
-  $ pyps total -q ProDy_stats.pkl 
+  $ pyps total -q ProDy_stats.pkl
   10664
 
 
 Latest release
 ^^^^^^^^^^^^^^
 
-Latest release information can be retrieved using **pypstats latest** 
+Latest release information can be retrieved using **pypstats latest**
 command::
 
   $ pyps latest -q ProDy
@@ -125,7 +123,7 @@ command::
 This information can be written into a CSV file using reStructured Text style::
 
   $ pyps latest -q -o latest_release.csv --rst ProDy
- 
+
 This file can be used in a page prepared using `Sphinx <http://sphinx.pocoo.org/>`_.
 
 
@@ -190,7 +188,7 @@ To get help, type in a command name with **-h** argument::
 Functions
 ^^^^^^^^^
 
-``from pypstats import *`` imports the following functions which can be used 
+``from pypstats import *`` imports the following functions which can be used
 directly in Python code:
 
 * ``pyps_update(package, pkl, cache)`` - update package statistics
@@ -201,9 +199,9 @@ directly in Python code:
 
 LICENSE
 -------
-  
-*pypstats* is available under GNU General Public License version 3.  See 
-LICENSE.rst for more details. 
+
+*pypstats* is available under GNU General Public License version 3.  See
+LICENSE.rst for more details.
 
 
 CHANGES
@@ -219,9 +217,9 @@ v1.4
 v1.3
 ------
 
-* Added new functions that can be used directly in Python code. See usage 
+* Added new functions that can be used directly in Python code. See usage
   section above.
-* Using timestamps when saving downloaded stats file so that time zone 
+* Using timestamps when saving downloaded stats file so that time zone
   differences do not cause a problem.
 
 v1.2.1
@@ -239,7 +237,7 @@ v1.2
 v1.1
 ----
 
-* Renamed command **current** to **latest**. 
+* Renamed command **current** to **latest**.
 
 
 SOURCE CODE
@@ -252,4 +250,4 @@ REPORT ISSUES
 -------------
 
 https://github.com/abakan/pypstats/issues
-  
+
